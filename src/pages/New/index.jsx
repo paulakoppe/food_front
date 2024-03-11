@@ -24,29 +24,6 @@ export function New() {
   const [newIngredient, setNewIngredient] = useState({});
 
   const navigate = useNavigate();
-  const params = useParams();
-  const dishId = params.id;
-
-  useEffect(() => {
-    async function fetchDish() {
-      try {
-        const response = await api.get(`/dishes/${dishId}`);
-        const dish = response.data;
-
-        setName(dish.name);
-        setDescription(dish.description);
-        setPrice(dish.price);
-        setImage(dish.image);
-        setIngredients(dish.ingredients);
-        setCategory(dish.category);
-        console.log(ingredients);
-      } catch (error) {
-        console.error("Error fetching dish:", error);
-      }
-    }
-
-    fetchDish();
-  }, [dishId]);
 
   function handleAddIngredient() {
     setIngredients([...ingredients, { name: "" }]);
@@ -57,7 +34,7 @@ export function New() {
     const updatedIngredients = [...ingredients];
     let toUpdate = { ...updatedIngredients[index], name };
     if (newIngredient) {
-      toUpdate = { name, dish_id: dishId };
+      toUpdate = { name };
     }
     updatedIngredients[index] = toUpdate;
     setIngredients(updatedIngredients);
@@ -75,12 +52,13 @@ export function New() {
         ingredients,
       };
 
-      await api.post(`/dishes`, payload);
+      const dish = await api.post(`/dishes`, payload);
+      const createDishId = dish.data.id
 
       if (imageFile) {
         const form = new FormData();
         form.append("file", imageFile);
-        await api.patch(`/dishes/${dishId}/image`, form);
+        await api.patch(`/dishes/${createDishId}/image`, form);
       }
 
       goBack();
