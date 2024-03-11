@@ -65,7 +65,7 @@ export function New() {
 
 
 
-  async function update() {
+  async function create() {
     try {
       const payload = {
         name,
@@ -75,7 +75,7 @@ export function New() {
         ingredients,
       };
 
-      await api.patch(`/dishes/${dishId}`, payload);
+      await api.post(`/dishes`, payload);
 
       if (imageFile) {
         const form = new FormData();
@@ -222,7 +222,7 @@ export function New() {
 
         <div className="button-actions">
          
-          <Button title={"Salvar alterações"} onClick={update} />
+          <Button title={"Salvar alterações"} onClick={create} />
         </div>
       </Content>
 
