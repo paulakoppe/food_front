@@ -38,7 +38,7 @@ export function Card({ data, ...rest }) {
   return (
     <Container {...rest}>
       <div className="container">
-        {user.is_admin ? (
+        {!user.is_admin ? (
           isFavorite ? (
             <AiFillHeart onClick={handleFavorite} />
           ) : (
@@ -53,7 +53,7 @@ export function Card({ data, ...rest }) {
         <p className="description">{data.description}</p>
         <h1 className="price">{data.price}</h1>
 
-        {user.is_admin ? (
+        {!user.is_admin ? (
           <Details>
             <div className="counter">
               <img src={minus} onClick={decrease} />
