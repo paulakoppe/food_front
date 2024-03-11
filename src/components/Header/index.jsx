@@ -37,14 +37,14 @@ export function Header({search}) {
     <Container>
       {isDesktop && (
         <Content>
-          <img src={!user.is_admin ? logoadmin : logo} alt="" />
+          <img src={user.is_admin ? logoadmin : logo} alt="" />
           <Search
             placeholder="Busque por pratos ou ingredientes"
             icon={FiSearch}
             onChange={e => {search(e.target.value)}}
 
           />
-          {!user.is_admin ? (
+          {user.is_admin ? (
             <Button onClick={handleNew}>
               Novo Prato
             </Button>
